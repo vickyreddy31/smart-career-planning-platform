@@ -1,0 +1,112 @@
+.dashboard {
+  margin-left: 280px;
+  min-height: 100vh;
+  padding: 35px;
+  background: #f7f8fc;
+}
+
+.dashboard h1 {
+  font-size: 36px;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+/* Statistics Section */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 25px;
+  position: relative;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 8px;
+  height: 100%;
+
+  background: #ff6b35;
+}
+
+.card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+  color: #ff6b35;
+}
+
+.card p {
+  font-size: 16px;
+  color: #555;
+  font-weight: 500;
+}
+
+/* Skills Section */
+.dashboard > div:last-child {
+  margin-top: 30px;
+  background: white;
+  border-radius: 18px;
+  padding: 25px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard h2 {
+  color: #2c3e50;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+/* Skill Grid */
+.dashboard ul {
+  list-style: none;
+  padding: 0;
+
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fill, minmax(180px, 1fr));
+
+  gap: 15px;
+}
+
+.dashboard li {
+  background: #fff7f3;
+  border: 1px solid #ffd4c4;
+
+  padding: 14px;
+  border-radius: 12px;
+
+  text-align: center;
+
+  color: #ff6b35;
+  font-weight: 600;
+
+  transition: 0.3s;
+}
+
+.dashboard li:hover {
+  background: #ff6b35;
+  color: white;
+}
+
+.dashboard p {
+  color: #666;
+}
