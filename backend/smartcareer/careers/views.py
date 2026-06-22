@@ -2,7 +2,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
-from accounts.models import User
 from profiles.models import Profile
 
 from .models import CareerPath, Roadmap
@@ -16,15 +15,19 @@ class CareerRecommendationView(APIView):
 
     def get(self, request):
 
-        user = User.objects.first()
+        profile = Profile.objects.first()
 
-        profile = Profile.objects.get(
-            user=user
-        )
+        if not profile:
+            return Response([])
 
         user_skills = [
+
             skill.strip()
-            for skill in profile.skills.split(',')
+
+            for skill in profile.skills.split(",")
+
+            if skill.strip()
+
         ]
 
         data = recommend_career(
@@ -40,15 +43,22 @@ class SkillGapView(APIView):
 
     def get(self, request, career_id):
 
-        user = User.objects.first()
+        profile = Profile.objects.first()
 
-        profile = Profile.objects.get(
-            user=user
-        )
+        if not profile:
+            return Response({
+                "career": "",
+                "missing_skills": []
+            })
 
         user_skills = [
+
             skill.strip()
-            for skill in profile.skills.split(',')
+
+            for skill in profile.skills.split(",")
+
+            if skill.strip()
+
         ]
 
         career = CareerPath.objects.get(
@@ -56,19 +66,28 @@ class SkillGapView(APIView):
         )
 
         required_skills = list(
+
             career.required_skills.values_list(
-                'name',
+                "name",
                 flat=True
             )
+
         )
 
         missing = list(
-            set(required_skills) - set(user_skills)
+
+            set(required_skills)
+            -
+            set(user_skills)
+
         )
 
         return Response({
+
             "career": career.title,
+
             "missing_skills": missing
+
         })
 
 
@@ -81,7 +100,7 @@ class RoadmapView(APIView):
         roadmap = Roadmap.objects.filter(
             career_id=career_id
         ).order_by(
-            'step_no'
+            "step_no"
         )
 
         serializer = RoadmapSerializer(

@@ -1,5 +1,3 @@
-# jobs/services.py
-
 from .models import Job
 
 
@@ -17,44 +15,64 @@ def match_jobs(user_skills):
     for job in jobs:
 
         required = [
-            skill.lower()
-            for skill in job.required_skills.values_list(
-                'name',
-                flat=True
-            )
+            skill.name.lower()
+            for skill in job.required_skills.all()
         ]
 
-    user_skills = [
-    s.strip().lower()
-    for s in user_skills
-]
+        matched = list(
+            set(user_skills)
+            &
+            set(required)
+        )
 
-    required = [
-    s.strip().lower()
-    for s in required
-]
+        missing = list(
+            set(required)
+            -
+            set(user_skills)
+        )
 
-    matched = len(
-    set(user_skills)
-    &
-    set(required)
-)
-    score = 0
+        score = 0
 
-    if len(required) > 0:
+        if len(required) > 0:
+
             score = (
-                matched /
+                len(matched)
+                /
                 len(required)
             ) * 100
 
-    recommendations.append({
+        recommendations.append({
 
-            "job_id": job.id,
-            "title": job.title,
-            "company": job.company,
-            "score": round(score, 2)
 
-        })
+"job_id": job.id,
+
+"title": job.title,
+
+"company": job.company,
+
+"location": job.location,
+
+"salary": job.salary,
+
+"description": job.description,
+
+"required_skills": required,
+
+"score": round(score, 2),
+
+"matched_skills": matched,
+
+"missing_skills": missing,
+
+"courses": [
+
+    f"Learn {skill}"
+    for skill in missing
+
+]
+
+
+})
 
     recommendations.sort(
         key=lambda x: x["score"],

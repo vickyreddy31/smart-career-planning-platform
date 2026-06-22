@@ -1,4 +1,5 @@
 from django.urls import path
+from .views import JobRecommendationView
 
 from .views import (
     JobListView,
@@ -45,6 +46,11 @@ urlpatterns = [
         'applications/',
         ApplicationListView.as_view(),
         name='applications'
+    ),
+    path(
+        "recommendations/",
+        JobRecommendationView.as_view(),
+        name="job-recommendations"
     ),
 
 ]

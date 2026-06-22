@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 'careers',
 'jobs',
 'dashboard',
- 'drf_yasg',
+'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -149,3 +149,4 @@ AUTH_USER_MODEL = 'accounts.User'
 
 MEDIA_URL='/media/'
 MEDIA_ROOT=BASE_DIR/'media'
+
